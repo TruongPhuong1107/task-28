@@ -14,7 +14,7 @@ function App() {
   const ahuhu = () => {
     const song = getAudio.current
     setDurationPlayer(formatNumber(Math.ceil(song.duration)))
-    song?.addEventListener("timeupdate", ()=>{
+    song.addEventListener("timeupdate", ()=>{
       let time = formatNumber(Math.ceil(song.currentTime))
       setCurrentTimePlayer(time)
       now.current.style.width = song.currentTime / song.duration.toFixed(3) * 100 + '%'
@@ -46,14 +46,20 @@ function App() {
     let time = getAudio.current
     getAudio.current.currentTime = Math.ceil(time.currentTime)-5
   }
-  
-  isPlay&&( getProgressBar.current?.addEventListener('click', function (event) {
-    let coordStart = this.getBoundingClientRect().left
-    let coordEnd = event.pageX
-    let p = (coordEnd - coordStart) / this.offsetWidth
-    now.current.style.width = p.toFixed(3) * 100 + '%'
-    getAudio.current.currentTime = p * getAudio.current.duration
-  }))
+  const handleClick = (event) => {
+      let coordStart = getProgressBar.current.getBoundingClientRect().left
+      let coordEnd = event.pageX
+      let p = (coordEnd - coordStart) / getProgressBar.current.offsetWidth
+      now.current.style.width = p.toFixed(3) * 100 + '%'
+      getAudio.current.currentTime = p * getAudio.current.duration
+  }
+
+  useEffect(()=>{
+    isPlay&&(getProgressBar.current?.addEventListener('click', handleClick))
+    return () => {
+      getProgressBar.current?.removeEventListener('click', handleClick)
+    }
+  },[isPlay])
   
   return (
     <div className="App">
@@ -84,7 +90,6 @@ function App() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
