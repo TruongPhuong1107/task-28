@@ -58,7 +58,7 @@ function App() {
     isPlay&&(getProgressBar.current?.addEventListener('click', handleClick))
     return () => {
       getProgressBar.current?.removeEventListener('click', handleClick)
-    }
+    }  
   },[isPlay])
   
   return (
@@ -73,6 +73,10 @@ function App() {
               <audio ref={getAudio} onLoadedData={ahuhu}>
                 <source src={process.env.PUBLIC_URL + "/audio/flyingWithoutWings.mp3"} type="audio/mpeg"></source>
               </audio>
+              <div className='songInfo'>
+                <h2>Flying Without Wings</h2>
+                <p>Weslife</p>
+              </div>
               <div className='btnGroup'>
                 <FontAwesomeIcon icon={faBackward} onClick={previous} />
                 <FontAwesomeIcon icon={(isPlay&&!isEnd)?faPause:faPlay} onClick={handlePlay}/>

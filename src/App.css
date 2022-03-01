@@ -1,3 +1,12 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+h2{
+  font-size: 16px;
+}
 .App {
   text-align: center;
 }
@@ -30,7 +39,7 @@
   object-fit:cover;
 }
 .controlPlayer{
-  padding: 0px 20px;
+  padding: 20px;
 }
 .controlPlayer .btnGroup{
   display: flex;
@@ -49,6 +58,7 @@
   border: none;
   background: rgb(139, 139, 139);
   position: relative;
+
   cursor: pointer;
 }
 .now {
