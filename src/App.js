@@ -50,16 +50,10 @@ function App() {
       let coordStart = getProgressBar.current.getBoundingClientRect().left
       let coordEnd = event.pageX
       let p = (coordEnd - coordStart) / getProgressBar.current.offsetWidth
-      now.current.style.width = p.toFixed(3) * 100 + '%'
+      now.current.style.width = `${p.toFixed(3) * 100}%`
       getAudio.current.currentTime = p * getAudio.current.duration
   }
 
-  useEffect(()=>{
-    isPlay&&(getProgressBar.current?.addEventListener('click', handleClick))
-    return () => {
-      getProgressBar.current?.removeEventListener('click', handleClick)
-    }  
-  },[isPlay])
   
   return (
     <div className="App">
@@ -67,11 +61,11 @@ function App() {
         <div className='playerContainer'>
           <div className='playerBody'>
             <div className='imgPlayer'>
-              <img src={process.env.PUBLIC_URL + "/img/sky.jpg"}></img>
+              <img src="/img/sky.jpg"></img>
             </div>
             <div className='controlPlayer'>
               <audio ref={getAudio} onLoadedData={ahuhu}>
-                <source src={process.env.PUBLIC_URL + "/audio/flyingWithoutWings.mp3"} type="audio/mpeg"></source>
+                <source src="/audio/flyingWithoutWings.mp3" type="audio/mpeg"></source>
               </audio>
               <div className='songInfo'>
                 <h2>Flying Without Wings</h2>
@@ -82,11 +76,12 @@ function App() {
                 <FontAwesomeIcon icon={(isPlay&&!isEnd)?faPause:faPlay} onClick={handlePlay}/>
                 <FontAwesomeIcon icon={faForward} onClick = {next}/>
               </div>
+
               <div className='timeControl'>
                 <span>{currentTimePlayer}</span>
                 <span>{durationPlayer}</span>
               </div>
-              <div className='controlProgress' ref={getProgressBar}>
+              <div className='controlProgress' ref={getProgressBar} onClick={(event) => handleClick(event)}>
                 <div className='now' ref={now}></div>
                 <div className='musicDuration'></div>   
                 <span></span>
